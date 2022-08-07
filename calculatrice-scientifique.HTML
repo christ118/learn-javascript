@@ -1,0 +1,894 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="GENERATOR" CONTENT="UltraEdit-32">
+<META NAME="Author" CONTENT="Thierry Denèle">
+<META NAME="Date" CONTENT="01-21-2003">
+<TITLE>Calculatrice Scientifique V2</TITLE>
+<style type="text/css">
+/* Définition des styles de table et cellules */
+body {font-size:14px;}
+input {font-size:12px;}
+
+table	{ border-width: 4pt;border-top-color: #6666FF;border-left-color: #6666FF;border-right-color: #3300CC; border-bottom-color: #3300CC; border-style: outset; background-color: orange;}
+td	{padding: 4pt; border-width: 4pt;border-top-color: #6666FF;border-left-color: #6666FF;border-right-color: #3300CC; border-bottom-color: #3300CC; border-style: inset;}
+tr	{text-align: center;}
+input.BY  {background-color: #00BBBB;color: antiquewhite;font-weight: 700;}
+input.BZ  {background-color: #BBBB00;color: antiquewhite;font-weight: 700;}
+input.BB  {background-color: #0000BB;color: antiquewhite;font-weight: 700;}
+input.BR  {background-color: #CC0000;color: antiquewhite;font-weight: 700;}
+input.BBL  {background-color: #000000;color: antiquewhite;font-weight: 700;}
+p	{color: #00257E;}
+</style>
+</HEAD>
+<BODY>
+<br><center>
+<form name="calculat">
+<center>
+<table style="border-width:0px;width:620px">
+<tr>
+	<td style="border-width:0px">
+	<tr>
+		<td colspan="2" style="color: darkblue; font-variant: small-caps;font-size:18px;">
+			<center><b><big>C</big>alculatrice <big>S</big>cientifique</b>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<table width="80%" style="border-width:0px">
+			<tr>
+				<td style="text-align: right; border-width:0px;">
+				<input type="text" size="35" style="width: 70%;background-color: black; color:#FEEB9B;text-align: right;" name="result" value="0" readonly>
+				</td>
+			</tr>
+				<td width=80% style="text-align:right;border-width:0px;font-family:'Arial', sans-serif;font-size:12px;">Mem Rappel: <input type="text" size="30" style="width: 43%;background-color: black; color:#FEEB9B;text-align: right;" name="memoire" value="0" onClick="actionP=100;" onChange="actionP=0">
+				&nbsp;Puiss :&nbsp;<input type="text" size="10" style="width: 10%;background-color: black; color:#FEEB9B;text-align: right;" name="puiss" value="0" onClick="document.calculat.puiss.value='';actionP = 100;"></td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<center>
+		<table style = "border-width : 0pt;" cellspacing ="0pt">
+			<tr>
+				<td style="border-width:0pt; margin:2px 0px 2px 0px">
+				<input class="BB" type="button" name="v1"  value="  1 " onClick="addonnee('1');">
+				<input class="BB" type="button" name="v2"  value="  2  " onClick="addonnee('2');">
+				<input class="BB" type="button" name="v3"  value="  3 " onClick="addonnee('3');">
+				<input class="BB" type="button" name="v4"  value="  4  " onClick="addonnee('4');">
+				<input class="BB" type="button" name="v5"  value="  5  " onClick="addonnee('5');">
+				</td>
+			</tr>
+			<tr>
+				<td style="border-width:0pt; margin:2px 0px 2px 0px">
+				<input class="BB" type="button" name="v6"  value="  6 " onClick="addonnee('6');">
+				<input class="BB" type="button" name="v7"  value="  7  " onClick="addonnee('7');">
+				<input class="BB" type="button" name="v8"  value="  8 " onClick="addonnee('8');">
+				<input class="BB" type="button" name="v9"  value="  9  " onClick="addonnee('9');">
+				<input class="BB" type="button" name="v10"  value="  0  " onClick="addonnee('0');">
+				</td>
+			</tr>
+				<td style="border-width:0px; margin:2px 0px 2px 0px">
+				<input class="BB" type="button" name="v11"  value="  .  " onClick="addonnee('.');">
+				<input class="BB" type="button" name="V12"  value="  Pi " onClick="addonnee(pi);">
+				<input class="BR" type="button" name="v13"  value="  ?  " onClick="aide();">
+				<input class="BY" type="button" name="v131"  value="Arà2" onClick="arrondi2(document.forms['calculat'].result.value);">
+				<input class="BY" type="button" name="v132"  value="Ent" onClick="entier(document.forms['calculat'].result.value);">
+				<input class="BB" type="button" name="v14"  value="  =  " onClick="calcule();">
+				</td>
+			</tr>
+			<tr>
+				<td style="border-width:0px; margin:2px 0px 2px 0px">
+				<input class="BBL" type="button" name="a9"  value=" M+ "; onClick="memoireplus();">
+				<input class="BBL" type="button" name="a10"  value=" M- " onClick="memoiremoins();">
+				<input class="BBL" type="button" name="a11"  value="RM"; onClick="memoirerap();">
+				<input class="BR" type="button" name="a12"  value="CM" onClick="memoireeff();">
+				<input class="BR" type="button" name="a13"  value=" C " onClick="C();">
+				<input class="BR" type="button" name="a14"  value=" CI " onClick="CI();">
+				<input class="BR" type="button" name="a14"  value=&#32;&#8592;&#32; onClick="annul();">
+				</td>
+			</tr>
+			<tr>
+				<td id="event" style="border-width:0px; margin:2px 0px 2px 0px">
+				<input class="BY" type="button" name="a1"  value="  + " onClick="adfunction('+');">
+				<input class="BY" type="button" name="a2"  value="  -  " onClick="adfunction('-');">
+				<input class="BY" type="button" name="a3"  value=&#32;&#215;&#32; onClick="adfunction('*');">
+				<input class="BY" type="button" name="a4"  value=&#32;&#247;&#32; onClick="adfunction('/');">
+				<input class="BY" type="button" name="a5"  value=&#32;&plusmn;&#32; onClick="plusmoins(document.forms['calculat'].result.value);">
+				<input class="BY" type="button" name="a51"  value=" % " onClick="Pourcentage(document.forms['calculat'].result.value);">
+				<input class="BZ" type="button" name="a51"  value=&euro;/F onClick="resultatEF(document.forms['calculat'].result.value);">
+				<input class="BZ" type="button" name="a6"  value=F/&euro; onClick="resultatFE(document.forms['calculat'].result.value);">
+				</td>
+			</tr>
+			<tr>
+				<td id="event" style="border-width:0px; margin:2px 0px 2px 0px">
+				<input class="BY" type="button" name="TV1"  value="tva5.5" onClick="tva(document.forms['calculat'].result.value,tva1,'x');">
+				<input class="BY" type="button" name="TV1+"  value="+tva5.5" onClick="tva(document.forms['calculat'].result.value,tva1,'plus');">
+				<input class="BY" type="button" name="TV2"  value="tva19.6" onClick="tva(document.forms['calculat'].result.value,tva2,'x');">
+				<input class="BY" type="button" name="TV2+"  value="+tva19.6" onClick="tva(document.forms['calculat'].result.value,tva2,'plus');">
+				</td>
+			</tr>
+		</table>
+	</td>
+	<td style="border-width:4px">
+		<table style = "border-width : 0pt;" cellspacing ="0pt">	
+		<tr>
+			<td style="border-width:0px; margin:2px 0px 2px 0px">
+			<input class="BY" type="button" name="a42"  value=&#32;PuissX&#32; onClick="puissance(document.forms['calculat'].result.value);">
+<!--- pour ceux qui ne voient que le code radic est le code du signe racine -->
+			<input class="BY" type="button" name="a41"  value=&#32;&radic;&#178; onClick="racine(document.forms['calculat'].result.value);">
+			<input class="BY" type="button" name="a42"  value="Fact" onClick="fact(document.forms['calculat'].result.value);">
+			<input class="BY" type="button" name="a7"  value=" Exp " onClick="expo(document.forms['calculat'].result.value);">
+			<input class="BY" type="button" name="a8"  value=" LogE " onClick="loga(document.forms['calculat'].result.value);">
+			</td>
+		</tr>
+		<tr>
+			<td style="border-width:0px; margin:2px 0px 2px 0px">
+			<input class="BY" type="button" name="a7"  value=" Sin " onClick="sinus(document.forms['calculat'].result.value);">
+			<input class="BY" type="button" name="a8"  value=" Cos " onClick="cosinus(document.forms['calculat'].result.value);">
+			<input class="BY" type="button" name="a80"  value=" Tan " onClick="tangente(document.forms['calculat'].result.value);">
+			</td>
+		</tr>
+		<tr>
+			<td style="border-width:0px; margin:2px 0px 2px 0px">
+			<input class="BY" type="button" name="a71"  value=" Asin " onClick="asinus(document.forms['calculat'].result.value);">
+			<input class="BY" type="button" name="a78"  value=" Acos " onClick="acosinus(document.forms['calculat'].result.value);">
+			<input class="BY" type="button" name="a79"  value=" Atan " onClick="atangente(document.forms['calculat'].result.value);">
+			</td>
+		</tr>
+		<tr>
+			<td style="border-width:0px; margin:2px 0px 2px 0px">
+			<input class="BZ" type="button" name="a84"  value="on/gr" onClick="oncegram(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a85"  value="gr/on" onClick="gramonce(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a82"  value="in/cm" onClick="inchcm(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a83"  value="cm/in" onClick="cminch(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a86"  value="dg/rd" onClick="degrad(document.forms['calculat'].result.value);">
+			</td>
+		</tr>
+		<tr>
+			<td style="border-width:0px; margin:2px 0px 2px 0px">
+			<input class="BZ" type="button" name="a8A"  value="ft/m" onClick="feetm(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a8B"  value="m/ft" onClick="mfeet(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a8C"  value="Ml/Km" onClick="milkm(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a8D"  value="Km/Ml" onClick="kmmil(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a87"  value="rd/dg" onClick="radeg(document.forms['calculat'].result.value);">
+			</td>
+		</tr>
+		<tr>
+			<td style="border-width:0px; margin:2px 0px 2px 0px">
+			<input class="BZ" type="button" name="a84"  value=" °C/°F " onClick="celfar(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a85"  value=" °F/°C " onClick="farcel(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a84"  value=" °C/°K " onClick="celkel(document.forms['calculat'].result.value);">
+			<input class="BZ" type="button" name="a85"  value=" °K/°C " onClick="kelcel(document.forms['calculat'].result.value);">
+			</td>
+		</tr>
+		<tr>
+			<td style="border-width:0px; margin:2px 0px 2px 0px">
+			<p style="color:#00257E;font-weight: 700;">FTALM TD &#169;</p>
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>
+</form>
+<script language="javascript">
+var clav = new String();
+document.onkeypress = new Function("document.getElementById('event');clav=String.fromCharCode(event.keyCode);clavier(event.keyCode);"); 
+<!--- Déclarations -->
+var tauxeuro = 6.55957;
+var incm = 2.54;
+var mtfeet = 0.3048;
+var oncegr = 28.34952;
+var kmml = 0.622137;
+var kel = 273.15;
+var rad = 0.0174533;
+var calcul = new Number;
+var pi = 3.1415926535;
+var mem = 0;
+tva1 = 0.055;
+tva2 = 0.196;
+var resultat = new String();
+var donnee = new String();
+var retour = new String();
+fonction = new String();
+<!--- actions: action : calculer, actionF : entrer une fonction, actionD : entrer une donnee -->
+action = 0;
+actionF = 0;
+actionD = 0;
+actionP = 0;
+nombre = new String();
+document.forms['calculat'].result.value = "0";
+nombre = "0";
+calcul = 0;
+donnee = "0";
+<!--- Entrée des données -->
+function addonnee(nombre) {
+<!--- Si le calcul vient d'être fait et pas de fonction : Effacement --->
+	if(action == 1 && actionF == 0) {
+		C();
+		}
+if(nombre == ".") {
+		donnee = resultat;
+		resultat = donnee.concat(nombre);
+		document.forms['calculat'].result.value = resultat;
+		}
+	else {
+<!--- on enlève le zéro si on est à 0 -->
+	if(resultat == "0") {resultat = "";}
+		donnee = resultat;
+		resultat = donnee.concat(nombre);
+		document.forms['calculat'].result.value = resultat;
+<!--- Mise à 1 de la donnée Fonction à 0 -->
+		actionD = 1; action = 0;
+
+	}
+}
+function adfunction(nombre) {
+<!-- si actionF à 1 actionD à 0, on a appuyé sur 2 fonctions -->
+	if(actionD == 0 && actionF == 1) 
+		{ void(0); }
+	else {
+	retour = resultat;
+	<!-- Si pas de donnée, donnée à 0 -->
+	if(actionD == 0) 
+		{ resultat = 0; }
+			if(actionD == 1 || actionF == 1) { 
+		calcul = eval(resultat);
+		calcul = Math.round(calcul*100000000)/ 100000000;
+		document.forms['calculat'].result.value = calcul;
+		resultat = calcul;
+		action = 1; actionF = 0; 
+		}
+
+	fonction = document.forms['calculat'].result.value;
+	resultat = fonction.concat(nombre);
+<!-- Mise à 1 de la fonction, pas de calcul, pas de donnée -->
+	actionF = 1;  actionD = 0; 
+	}
+}
+function calcule() {
+<!--- Si pas de fonction ou pas de donnée : pas de calcul -->
+	if(actionF == 0 || actionD == 0) 
+		{ void(0) 
+		}
+	else
+		{
+			calcul = eval(resultat);
+			calcul = Math.round(calcul*100000000)/ 100000000;
+			document.forms['calculat'].result.value = calcul;
+	<!--- Calcul effectué, pas de fonction, pas de donnée --->
+			action = 1; actionF = 0; actionD = 0; 
+			resultat = calcul;
+			calcul = 0;
+		}
+}
+function C() {
+	resultat = "0";
+	nombre = "0";
+	donnee = 0;
+	fonction = "";
+	action = 0;
+	actionF = 0;
+	actionD = 0;
+	document.forms['calculat'].result.value = "0";
+	document.forms['calculat'].puiss.value = "0";
+	}
+function annul() {
+	if(action == 0) {
+	donnee = "";
+	if(resultat != document.forms['calculat'].result.value)
+		{ resultat = retour; }
+	donnee = resultat.slice(resultat.length-1,resultat.length);
+	if(isNaN(donnee)) {void(0);}
+		else {
+			resultat = resultat.slice(0,resultat.length-1);
+			document.forms['calculat'].result.value = resultat;
+			}
+		}
+	}	
+function CI() {
+	resultat = retour;
+	document.forms['calculat'].result.value = resultat;
+	calcul = eval(resultat);
+	document.forms['calculat'].result.value = calcul;
+	<!--- Calcul effectué, pas de fonction, pas de donnée --->
+	action = 1; actionF = 0; actionD = 0; 
+	resultat = calcul;
+	calcul = 0;
+	}
+function resultatEF (nombre) {
+<!-- Si une fonction a déjà été entrée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.round(calcul*tauxeuro *100)/100; 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function resultatFE (nombre) {
+<!-- Si une fonction a déjà été entrée : pas d'entrée de fonction -->
+	if(actionF == 1 ) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.round(calcul/tauxeuro *100)/100; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function tva(nombre, tva, ajout) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+		if (ajout == "plus") 
+		{
+			calcul = eval(nombre);
+		        resultat = eval(eval(resultat) + eval(resultat * tva));
+		        document.forms['calculat'].result.value = resultat; 
+			donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+			action = 1; actionF = 0; actionD = 0;
+		}
+		else 
+		{
+			if (ajout == "moins") 
+			{
+			calcul = eval(nombre);
+		        resultat = eval(eval(resultat) - eval(resultat * tva));
+		        document.forms['calculat'].result.value = resultat; 
+			donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+			action = 1; actionF = 0; actionD = 0;
+			}
+			else 
+			{
+			calcul = eval(nombre);
+		        resultat = resultat * tva;
+		        document.forms['calculat'].result.value = resultat; 
+			donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+			action = 1; actionF = 0; actionD = 0;
+			}
+		}
+	}
+}
+function Pourcentage(nombre) {
+x = 0;
+y = 0;
+	if (nombre.indexOf("*") != -1 || nombre.indexOf("/") != -1)
+		{ 	resultat = eval(eval(nombre) / 100);
+		        document.forms['calculat'].result.value = resultat; 
+			donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+			action = 1; actionF = 0; actionD = 0;
+		}
+	if (nombre.indexOf("+")!= -1 || nombre.indexOf("-")!= -1)
+		{	x = nombre.indexOf("+");
+			if (x == -1) {x = nombre.indexOf("-"); y = x;}
+			resultat = nombre.slice(0,x);
+			calcul = eval(resultat)*(eval(nombre.slice(x+1,nombre.length))/100);
+			if (y == 0) {
+				resultat = eval(resultat) + calcul;
+			}
+			else {
+				resultat = eval(resultat) - calcul;
+			}
+		        document.forms['calculat'].result.value = resultat; 
+			donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+			action = 1; actionF = 0; actionD = 0;
+		}
+}
+function plusmoins(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+	if (calcul < 0) {
+        	resultat = calcul + (-2*calcul);
+        	}
+        	else {
+        	resultat = calcul - 2*calcul;
+        	}
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée, actionP à 0,
+	//actionP est la donnée qui permet de désactiver la saisie au clavier de chiffres dans la donnée principale par son ajout au code touche --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+
+function arrondi2(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre)*100;
+        calcul = Math.round(calcul);
+        resultat = calcul/100; 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function entier(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        calcul = Math.floor(calcul);
+        resultat = calcul; 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function fact(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = Math.ceil(eval(nombre));
+	var x = calcul-1;
+	while (x > 1) {
+		resultat = calcul * x;
+        	calcul = resultat;
+        	x--;
+        	}
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée, actionP à 0,
+	//actionP est la donnée qui permet de désactiver la saisie au clavier de chiffres dans la donnée principale par son ajout au code touche --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function puissance(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+		if(document.calculat.puiss.value==0)
+			{	alert("Puissance 0 = 1, Saisissez la puissance !");
+				document.calculat.puiss.select();actionP = 100;
+			}
+			else {
+	calcul = eval(nombre);
+        resultat = Math.pow(calcul,document.calculat.puiss.value);
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée, actionP à 0,
+	//actionP est la donnée qui permet de désactiver la saisie au clavier de chiffres dans la donnée principale par son ajout au code touche --->
+		action = 1; actionF = 0; actionD = 0; actionP = 0;
+		}
+	}
+}
+function expo(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.exp(calcul);
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function loga(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.log(calcul);
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function oncegram(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul * oncegr; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function gramonce(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul / oncegr; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function inchcm(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul * incm; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function cminch(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul / incm; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function feetm(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul * mtfeet; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function mfeet(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul / mtfeet; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function milkm(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul / kmml; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function kmmil(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul * kmml; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function celfar(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul *(9*.2)+32;
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function farcel(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = (calcul - 32) / (9*0.2); 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function celkel(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul + kel; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function kelcel(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul - kel; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function degrad(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul * rad; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function radeg(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = calcul / rad; 
+        document.forms['calculat'].result.value = resultat; 
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function cosinus(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.cos(calcul); 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function sinus(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.sin(calcul); 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function tangente(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.tan(calcul); 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function acosinus(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.acos(calcul); 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function asinus(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.asin(calcul); 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function atangente(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.atan(calcul); 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function racine(nombre) {
+<!-- Si une fonction a déjà été entrée ou pas de donnée : pas d'entrée de fonction -->
+	if(actionF == 1) 
+		{ void(0) }
+	else
+	{
+	calcul = eval(nombre);
+        resultat = Math.sqrt(calcul); 
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+}
+function loto() {
+<!-- effacement dans le cas du loto - pas de données -->
+	C();
+        resultat = Math.round(Math.random()*100);
+<!-- Le chiffre  du Math.random() est compris entre 0 et 1 -->
+	if( resultat > 49 || resultat == 0 ) {loto();}
+        document.forms['calculat'].result.value = resultat;
+	donnee =  resultat;
+<!--- Calcul effectué, pas de fonction, pas de donnée --->
+		action = 1; actionF = 0; actionD = 0;
+	}
+
+function memoireplus () {
+if (document.forms['calculat'].result.value == "" )
+		{void(0);}
+	else {
+		mem = mem + eval(document.forms['calculat'].result.value);
+		document.forms['calculat'].memoire.value = mem;
+		}
+}
+function memoiremoins () {
+if (document.forms['calculat'].result.value == "" )
+		{void(0);}
+	else {
+		mem = mem - eval(document.forms['calculat'].result.value);
+		document.forms['calculat'].memoire.value = mem;
+		}
+}
+function memoirerap () {
+addonnee(mem);
+}
+function memoireeff () {
+	mem = 0;
+	document.forms['calculat'].memoire.value = mem;
+}
+function aide() {
+info = window.open ("","aide","width=300pt,height=450pt,scrollbars = yes, tollbar = no, top=50px, left=200px" );
+info.document.write("<p style='width:100%'>Les chiffres sont à saisir, soit en cliquant sur les boutons, soit au clavier.<br>La saisie au clavier (réalisée par code event) peut parfois ne pas marcher. Relancer la calculatrice.</p>");
+info.document.write("<p style='width:100%'>CI efface le dernier calcul.</p>");
+info.document.write("<p style='width:100%'><- le dernier chiffre entré.</p>");
+info.document.write("<p>Ara2 : Arrondi à 2.</p>");
+info.document.write("<p>Raccourcis clavier : (maj ou min) autres que calculs courants</p>");
+info.document.write("<p>calcul par = ou Entr </p>");
+info.document.write("<p>mise à zero par Echap </p>");
+info.document.write("<p>A pour arrondi à 2</p>");
+info.document.write("<p>E pour francs/euros</p>");
+info.document.write("<p>F pour euros/francs </p>");
+info.document.write("<p>R pour racine carr&eacute;e </p>");
+info.document.write("<p>L pour logarithme </p>");
+info.document.write("<p>T pour Factorielle</p>");
+info.document.write("<p>aide par ? </p>");
+info.document.write("<p>Les autres ne sont pas accessibles au clavier.</p>");
+info.document.write("<p><a href='javascript:window.close();'>Fermer</a></p>");
+}
+function clavier(code) {
+<!--- Ajoutez les touches clavier vous-même ! Mettez un alert(code); sous cette ligne, vous aurez le code de la touche que vous tapez, voyez miniscule et majuscule et renvoyez sur la focntion.-->
+code = code + actionP;
+<!-- données de 0 à 9 --->
+if ((code >= 48 && code <= 57) || code == 46)
+	{addonnee(clav);}
+<!--- opérations +-*/ --->
+if (code == 42 || code == 43 || code == 45 || code == 47)
+	{ adfunction(clav); }
+<!--- calcul par = ou Entr -->
+if (code == 13 || code == 61 ) { calcule(); }
+<!--- mise à zero par Echap --->
+if (code == 27) { C(); }
+<!--- A pour arrondi à 2 -->
+if (code == 65 || code == 97 ) { arrondi2(document.forms['calculat'].result.value); }
+<!--- aide par ? -->
+if (code == 63 ) { aide(); }
+<!--- e pour francs/euros -->
+if (code == 69 || code == 101 ) { resultatFE(document.forms['calculat'].result.value); }
+<!--- F pour euros/francs-->
+if (code == 70 || code == 102 ) { resultatEF(document.forms['calculat'].result.value); }
+<!--- T pour Factorielle-->
+if (code == 84 || code == 116) { Fact(document.forms['calculat'].result.value); }
+<!--- L pour Log-->
+if (code == 76 || code == 108 ) { loga(document.forms['calculat'].result.value); }
+<!--- R pour Racine carr&eacute;e-->
+if (code == 82 || code == 114 ) { racine(document.forms['calculat'].result.value); }
+<!--- R pour Racine carr&eacute;e-->
+if (code == 82 || code == 114 ) { racine(document.forms['calculat'].result.value); }
+}
+</script>
+</body>
+</html>
